@@ -80,6 +80,37 @@ exports['test route'] = nodeunit.testCase({
         test.equal(matchRoute.arguments.action, 'show');
         test.equal(matchRoute.arguments.id, '112');
         test.done();
+    },
+
+    'test find route with high priority': function(test) {
+        var routeConfig = [
+                {
+                    name: 'index',
+                    path: '/index'
+                },
+                {
+                    name: 'category_list',
+                    path: '/category/list'
+                },
+                {
+                    name: 'category',
+                    path: '/category/:op/:catname'
+                },
+                {
+
+                    name: 'show',
+                    path: '/:controller/:action/:id'
+                }
+            ],
+            r = new route.Route(routeConfig);
+
+        var matchRoute = r.find('/category/show/112');
+        test.equal(matchRoute.name, 'category');
+
+        var matchListRoute = r.find('/category/list');
+        test.equal(matchListRoute.name, 'category_list');
+        test.done();
     }
+
 
 });
