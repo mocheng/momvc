@@ -1,5 +1,6 @@
 var action = require('../lib/action'),
     template = require('../lib/template'),
+    Context = require('../lib/context').Context,
     events = require('events'),
     mustache = require('mustache'),
     nodeunit = require('nodeunit');
@@ -16,18 +17,19 @@ exports['test action'] = nodeunit.testCase({
     'test action complete immediately' : function(test) {
         test.expect(2);
         var testAction = function(ctx) {
-            ctx.end();
+            ctx.done();
             test.equal(ctx.isDone(), true, 'the context shold have been done');
         };
 
         var req = new events.EventEmitter(),
-            res = new events.EventEmitter();
+            res = new events.EventEmitter(),
+            ctx = new Context(req, res);
 
         res.end = function(result) {
             test.equal(result, undefined, 'should be undefined');
         };
 
-        action.processAction(req, res, testAction);
+        action.processAction(ctx, testAction);
         test.done();
     },
 
@@ -36,7 +38,7 @@ exports['test action'] = nodeunit.testCase({
 
         var testAction = function(ctx) {
             setTimeout(function() {
-                ctx.end();
+                ctx.done();
                 test.equal(ctx.isDone(), true, 'the context shold have been done');
                 test.done();
             }, 500);
@@ -51,12 +53,12 @@ exports['test action'] = nodeunit.testCase({
             test.equal(result, undefined, 'should be undefined');
         };
 
-        action.processAction(req, res, testAction);
+        action.processAction(new Context(req, res), testAction);
     },
 
     'test action completed with string' : function(test) {
         var testAction = function(ctx) {
-            ctx.end('hello world');
+            ctx.done('hello world');
             test.equal(ctx.isDone(), true, 'the context shold have been done');
         };
 
@@ -68,12 +70,12 @@ exports['test action'] = nodeunit.testCase({
             test.done();
         }
 
-        action.processAction(req, res, testAction);
+        action.processAction(new Context(req, res), testAction);
     },
 
     'test action completed with object' : function(test) {
         var testAction = function(ctx) {
-            ctx.end({foo: 'bar'});
+            ctx.done({foo: 'bar'});
             test.equal(ctx.isDone(), true, 'the context shold have been done');
         };
 
@@ -89,7 +91,7 @@ exports['test action'] = nodeunit.testCase({
             test.done();
         }
 
-        action.processAction(req, res, testAction);
+        action.processAction(new Context(req, res), testAction);
 
         template.render = _render;
     }

@@ -14,7 +14,11 @@ exports['test route'] = nodeunit.testCase({
         var routeconfig = [
                 {
                     name: 'root',
-                    path: '/'
+                    path: '/',
+                    params: {
+                        module: 'm',
+                        action: 'a'
+                    }
                 }
             ],
             r = new route.Route(routeconfig);
@@ -22,6 +26,46 @@ exports['test route'] = nodeunit.testCase({
         var matchRoute = r.find('/');
         test.equal(matchRoute.name, 'root');
         test.equal(matchRoute.path, '/');
+        test.equal(matchRoute.arguments.module, 'm');
+        test.equal(matchRoute.arguments.action, 'a');
+        test.done();
+    },
+
+    'test find single route with route arguments': function(test) {
+        var routeconfig = [
+                {
+                    name: 'root',
+                    path: '/',
+                    params: {
+                        module: 'm',
+                        action: 'a',
+                        foo: 'bar'
+                    }
+                }
+            ],
+            r = new route.Route(routeconfig);
+
+        var matchRoute = r.find('/');
+        test.equal(matchRoute.name, 'root');
+        test.equal(matchRoute.path, '/');
+        test.equal(matchRoute.arguments.module, 'm');
+        test.equal(matchRoute.arguments.action, 'a');
+        test.equal(matchRoute.arguments.foo, 'bar');
+        test.done();
+    },
+
+    'test route config with no module and action': function(test) {
+        var routeconfig = [
+                {
+                    name: 'root',
+                    path: '/',
+                }
+            ];
+
+        test.throws(function() {
+            new route.Route(routeconfig);
+        });
+
         test.done();
     },
 
@@ -29,7 +73,11 @@ exports['test route'] = nodeunit.testCase({
         var routeconfig = [
                 {
                     name: 'root',
-                    path: '/'
+                    path: '/',
+                    params: {
+                        module: 'm',
+                        action: 'a'
+                    }
                 }
             ],
             r = new route.Route(routeconfig);
@@ -43,11 +91,20 @@ exports['test route'] = nodeunit.testCase({
         var routeConfig = [
                 {
                     name: 'root',
-                    path: '/'
+                    path: '/',
+                    params: {
+                        module: 'm',
+                        action: 'a'
+                    }
                 },
                 {
                     name: 'index',
-                    path: '/index'
+                    path: '/index',
+                    params: {
+                        module: 'm',
+                        action: 'a'
+                    }
+
                 }
             ],
             r = new route.Route(routeConfig);
@@ -62,21 +119,28 @@ exports['test route'] = nodeunit.testCase({
         var routeConfig = [
                 {
                     name: 'index',
-                    path: '/index'
+                    path: '/index',
+                    params: {
+                        module: 'm',
+                        action: 'a'
+                    }
                 },
                 {
-
                     name: 'show',
-                    path: '/:controller/:action/:id'
+                    path: '/:module/:action/:id',
+                    params: {
+                        module: 'm',
+                        action: 'a'
+                    }
                 }
             ],
             r = new route.Route(routeConfig);
 
         var matchRoute = r.find('/blog/show/112');
         test.equal(matchRoute.name, 'show');
-        test.equal(matchRoute.path, '/:controller/:action/:id');
+        test.equal(matchRoute.path, '/:module/:action/:id');
         //console.log(matchRoute.arguments);
-        test.equal(matchRoute.arguments.controller, 'blog');
+        test.equal(matchRoute.arguments.module, 'blog');
         test.equal(matchRoute.arguments.action, 'show');
         test.equal(matchRoute.arguments.id, '112');
         test.done();
@@ -86,11 +150,19 @@ exports['test route'] = nodeunit.testCase({
         var routeConfig = [
                 {
                     name: 'index',
-                    path: '/index'
+                    path: '/index',
+                    params: {
+                        module: 'm',
+                        action: 'a'
+                    }
                 },
                 {
                     name: 'category_list',
-                    path: '/category/list'
+                    path: '/category/list',
+                    params: {
+                        module: 'm',
+                        action: 'a'
+                    }
                 },
                 {
                     name: 'category',
@@ -99,7 +171,7 @@ exports['test route'] = nodeunit.testCase({
                 {
 
                     name: 'show',
-                    path: '/:controller/:action/:id'
+                    path: '/:module/:action/:id'
                 }
             ],
             r = new route.Route(routeConfig);
@@ -111,6 +183,5 @@ exports['test route'] = nodeunit.testCase({
         test.equal(matchListRoute.name, 'category_list');
         test.done();
     }
-
 
 });
