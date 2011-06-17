@@ -1,6 +1,6 @@
 var action = require('../lib/action'),
     template = require('../lib/template'),
-    Context = require('../lib/context').Context,
+    Context = require('../lib/context'),
     events = require('events'),
     mustache = require('mustache'),
     nodeunit = require('nodeunit');

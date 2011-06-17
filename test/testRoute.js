@@ -1,4 +1,4 @@
-var route = require('../lib/route'),
+var Route = require('../lib/route'),
     nodeunit = require('nodeunit');
 
 exports['test route'] = nodeunit.testCase({
@@ -21,7 +21,7 @@ exports['test route'] = nodeunit.testCase({
                     }
                 }
             ],
-            r = new route.Route(routeconfig);
+            r = new Route(routeconfig);
 
         var matchRoute = r.find('/');
         test.equal(matchRoute.name, 'root');
@@ -43,7 +43,7 @@ exports['test route'] = nodeunit.testCase({
                     }
                 }
             ],
-            r = new route.Route(routeconfig);
+            r = new Route(routeconfig);
 
         var matchRoute = r.find('/');
         test.equal(matchRoute.name, 'root');
@@ -63,7 +63,7 @@ exports['test route'] = nodeunit.testCase({
             ];
 
         test.throws(function() {
-            new route.Route(routeconfig);
+            new Route(routeconfig);
         });
 
         test.done();
@@ -80,7 +80,7 @@ exports['test route'] = nodeunit.testCase({
                     }
                 }
             ],
-            r = new route.Route(routeconfig);
+            r = new Route(routeconfig);
 
         var matchRoute = r.find('/abc');
         test.equal(matchRoute, undefined);
@@ -107,7 +107,7 @@ exports['test route'] = nodeunit.testCase({
 
                 }
             ],
-            r = new route.Route(routeConfig);
+            r = new Route(routeConfig);
 
         var matchRoute = r.find('/index');
         test.equal(matchRoute.name, 'index');
@@ -134,7 +134,7 @@ exports['test route'] = nodeunit.testCase({
                     }
                 }
             ],
-            r = new route.Route(routeConfig);
+            r = new Route(routeConfig);
 
         var matchRoute = r.find('/blog/show/112');
         test.equal(matchRoute.name, 'show');
@@ -174,7 +174,7 @@ exports['test route'] = nodeunit.testCase({
                     path: '/:module/:action/:id'
                 }
             ],
-            r = new route.Route(routeConfig);
+            r = new Route(routeConfig);
 
         var matchRoute = r.find('/category/show/112');
         test.equal(matchRoute.name, 'category');

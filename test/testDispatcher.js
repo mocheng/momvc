@@ -1,5 +1,5 @@
 var Dispatcher = require('../lib/dispatcher'),
-    route = require('../lib/route'),
+    Route = require('../lib/route'),
     nodeunit = require('nodeunit');
 
 exports['test Dispatcher'] = nodeunit.testCase({
@@ -22,7 +22,7 @@ exports['test Dispatcher'] = nodeunit.testCase({
                     }
                 }
             ],
-            mockRoute = new route.Route(routeconfig),
+            mockRoute = new Route(routeconfig),
             dispatcher = new Dispatcher(mockRoute),
             req = {url: '/'},
             res = {},
