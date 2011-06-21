@@ -1,0 +1,24 @@
+{
+  "name": "momvc",
+  "description": "A simple MVC framework based on node.js",
+  "version": "0.0.1",
+  "homepage": "http://github.com/mocheng/momvc/wiki",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mocheng/momvc.git"
+  },
+  "dependencies": {
+    "nodeunit": ">=0.5.1"
+  },
+  "author": "Morgan Cheng <morgan.chengmo> (http://www.morgancheng.com)",
+  "main": "lib/index",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "nodeunit test"
+  },
+  "engines": {
+    "node": ">=0.4.8"
+  }
+}
