@@ -8,6 +8,8 @@
     "url": "git://github.com/mocheng/momvc.git"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "nodeunit": ">=0.5.1"
   },
   "author": "Morgan Cheng <morgan.chengmo> (http://www.morgancheng.com)",
